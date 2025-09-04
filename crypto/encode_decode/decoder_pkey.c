@@ -223,8 +223,8 @@ static void collect_decoder_keymgmt(EVP_KEYMGMT *keymgmt, OSSL_DECODER *decoder,
      * don't check it again here.
      */
 
-    if (keymgmt->name_id != decoder->base.id)
-        /* Mismatch is not an error, continue. */
+    if (decoder->base.id != keymgmt->name_id
+        && !(data->sm2_id != 0 && decoder->base.id == data->sm2_id))
         return;
 
     if ((decoderctx = decoder->newctx(provctx)) == NULL) {
